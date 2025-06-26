@@ -1,0 +1,69 @@
+from db import conectar
+
+class Funcionario:
+    def __init__(self, nome, email, senha, id=None):
+        self.id = id
+        self.nome = nome
+        self.email = email
+        self.senha = senha
+
+
+    def salvar_funcionario(self):
+        conn = conectar()
+        cursor = conn.cursor()
+        
+        if self.id is None:
+            
+            sql = """
+            INSERT INTO funcionario (nome, email, senha)
+            VALUES (%s, %s, %s)
+            """
+            valores = (self.nome,self.email,self.senha)
+
+        else:
+            sql = """
+            UPDATE funcionario
+            SET nome = %s, email = %s, senha = %s
+            WHERE email = %s
+            """
+            
+            valores = (self.nome, self.email, self.senha, self.id)
+            cursor.execute(sql, valores)
+            conn.commit()
+
+            cursor.close()
+            conn.close()
+
+    @staticmethod
+    def buscar_todos():
+        conn = conectar()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM funcionario")
+        resultados = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+        return [Funcionario(**r) for r in resultados]
+    
+    @staticmethod
+    def buscar_por_id(id):
+        conn = conectar()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM funcionario WHERE id = %s", (id,))
+        resultado = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        return Funcionario(**resultado) if resultado else None
+    
+    def deletar(self):
+        if self.id is not None:
+            conn = conectar()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM funcionario WHERE id = %s", (self.id,))
+            conn.commit()
+            cursor.close()
+            conn.close()
