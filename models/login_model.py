@@ -1,7 +1,7 @@
 from models.db import conectar
 
 class Login:
-    def _init_(self, email, senha, tipo):
+    def __init__(self, email, senha, tipo):
         self.email = email
         self.senha = senha
         self.tipo = tipo
