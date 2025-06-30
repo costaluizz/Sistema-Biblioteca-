@@ -1,7 +1,15 @@
-from models.login_model import Login
+from views.login_view import LoginView
 
 class LoginController:
+
+    def __init__(self, root):
+        self.root = root
+        self.view = LoginView(self)
+    
+    
+    '''
     @staticmethod
+    
     def consultar():
         email = 'luiz@gmail.com'
         senha = '123456'
@@ -16,3 +24,8 @@ class LoginController:
         else:
             print("Email ou senha incorretos.")
             return False
+    '''
+    def iniciar_login(self):
+        self.view.mostrar()
+    
+
