@@ -29,4 +29,4 @@ class LoginView:
         tk.Radiobutton(self.frame, text="Funcionário", variable=self.tipo_var, value="funcionario").pack()
 
         tk.Button(self.frame, text="Login", command=self.controller.verificar_login).pack(pady=30)
-        tk.Button(self.frame, text="Cadastrar").pack(pady=40)
+        tk.Button(self.frame, text="Cadastrar", command=self.controller.abrir_tela_cadastro).pack(pady=10)
