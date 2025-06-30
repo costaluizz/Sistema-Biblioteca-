@@ -1,8 +1,8 @@
 from models.cadastrar_models import Cadastrar
 
 class CadastrarController:
-    def cadastrar(self, nome, email, senha, tipo):
-        cadastrar = Cadastrar(nome, email, senha, tipo)
+    def cadastrar(self, nome, email, senha):
+        cadastrar = Cadastrar(nome, email, senha)
         cadastrar.salvar()
         return cadastrar
     
