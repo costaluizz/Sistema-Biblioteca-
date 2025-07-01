@@ -52,5 +52,5 @@ class LoginController:
     def abrir_tela_cadastro(self):
         from controllers.cadastrar_controller import CadastrarController
         self.view.frame.destroy()
-        CadastrarController(self.root).mostrar_tela()
+        CadastrarController(self.root).cadastrar()
 
