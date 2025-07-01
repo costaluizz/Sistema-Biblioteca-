@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 class LoginView:
 
-    def _init_(self, controller):
+    def __init__(self, controller):
         self.controller = controller
         self.root = controller.root
         self.frame = tk.Frame(self.root)
