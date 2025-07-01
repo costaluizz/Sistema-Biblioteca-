@@ -1,4 +1,5 @@
 import tkinter as tk
+from controllers.cadastrar_controller import CadastrarController
 
 class CadastroAlunoView:
     def _init_(self, controller):
@@ -29,5 +30,5 @@ class CadastroAlunoView:
         nome = self.nome_var.get()
         email = self.email_var.get()
         senha = self.senha_var.get()
-
+        self.controller = CadastrarController()
         self.controller.cadastrar(nome, email, senha)
