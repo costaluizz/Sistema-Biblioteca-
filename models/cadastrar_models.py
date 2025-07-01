@@ -1,4 +1,4 @@
-from db import conectar
+from models.db import conectar
 
 class Cadastrar:
     def __init__(self,nome,email,senha,tipo,id=None):
