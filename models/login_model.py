@@ -13,9 +13,9 @@ class Login:
         resultado = None
 
         if self.tipo == 'aluno':
-            sql = "SELECT * FROM alunos WHERE email = %s AND senha = %s"
+            sql = "SELECT id_aluno, email FROM alunos WHERE email = %s AND senha = %s"
         elif self.tipo == 'funcionario':
-            sql = "SELECT * FROM funcionario WHERE email = %s AND senha = %s"
+            sql = "SELECT id_funcionario, email FROM funcionario WHERE email = %s AND senha = %s"
         else:
             cursor.close()
             conn.close()
@@ -29,14 +29,16 @@ class Login:
         conn.close()
 
         if resultado:
-            self.id = resultado['id_aluno']
+            if self.tipo == 'aluno':
+                self.id = resultado['id_aluno']
+            else:
+                self.id = resultado['id_funcionario']
             self.email = resultado['email']
             return self
         else:
             return None
-
         
-    
 
-   
+
+    
 

@@ -2,13 +2,13 @@ from models.db import conectar
 
 class Emprestimo:
 
-    def __init__(self,id_livro, data_emprestimo, data_devolucao, id_aluno, id=None):
-        self.id = id
+    def __init__(self, id_livro, data_emprestimo, data_devolucao, id_aluno, id_emprestimo=None):
+        self.id = id_emprestimo
         self.id_livro = id_livro        
         self.data_emprestimo = data_emprestimo
         self.data_devolucao = data_devolucao    
         self.id_aluno = id_aluno
-
+        
     def salvar_emprestimos(self):
         conn = conectar()
         cursor = conn.cursor()
