@@ -21,4 +21,11 @@ class EmprestimoController:
         emprestimo.salvar_emprestimos()
         return emprestimo   
         
-        
+    def listar_por_usuario(self, tipo_usuario, id_aluno=None):
+        print(tipo_usuario, id_aluno)
+        if tipo_usuario == 'funcionario':
+            return Emprestimo.buscar_todos()
+        elif tipo_usuario == 'aluno' and id_aluno:
+            return Emprestimo.buscar_por_aluno(id_aluno)
+        else:
+            return []

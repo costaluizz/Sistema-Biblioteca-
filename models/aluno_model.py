@@ -12,7 +12,7 @@ class Aluno:
         if self.id is None:  
             sql = """
             INSERT INTO alunos (nome, email,senha)
-            VALUES (%s, %s)
+            VALUES (%s, %s, %s)
             """
             valores = (self.nome,self.email,self.senha)
         else: 

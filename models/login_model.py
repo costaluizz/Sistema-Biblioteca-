@@ -5,6 +5,7 @@ class Login:
         self.email = email
         self.senha = senha
         self.tipo = tipo
+        self.id = None
 
     def consultar_login(self):
         conn = conectar()
@@ -28,8 +29,9 @@ class Login:
         conn.close()
 
         if resultado:
-            print('Logado com sucesso!')
-            return Login(email=resultado['email'], senha=resultado['senha'], tipo=self.tipo)
+            self.id = resultado['id_aluno']
+            self.email = resultado['email']
+            return self
         else:
             return None
 

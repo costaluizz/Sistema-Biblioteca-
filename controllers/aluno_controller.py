@@ -6,8 +6,8 @@ class AlunoController:
         aluno.salvar_aluno()
         return aluno
     
-    def excluir_aluno(self, aluno_id):
-        aluno = Aluno.buscar_por_id(aluno_id)
+    def excluir_aluno(self, id_aluno):
+        aluno = Aluno.buscar_por_id(id_aluno)
         if aluno:
             aluno.deletar()
             return True

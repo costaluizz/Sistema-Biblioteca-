@@ -1,4 +1,4 @@
-from db import conectar
+from models.db import conectar
 
 class Emprestimo:
 
@@ -61,6 +61,19 @@ class Emprestimo:
         conn.close()
 
         return Emprestimo(**resultado) if resultado else None
+
+    @staticmethod
+    def buscar_emprestimo_por_aluno(id):
+        conn = conectar()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM emprestimos WHERE id_aluno = %s", (id,))
+        resultado = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        return Emprestimo(**resultado) if resultado else None
     
     def deletar(self):
         if self.id is not None:
@@ -72,3 +85,16 @@ class Emprestimo:
             conn.close()
 
 
+    
+
+    @staticmethod
+    def buscar_por_aluno(id_aluno):
+        conn = conectar()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT * FROM emprestimos WHERE id_aluno = %s", (id_aluno,))
+        resultados = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+        return [Emprestimo(**r) for r in resultados]
