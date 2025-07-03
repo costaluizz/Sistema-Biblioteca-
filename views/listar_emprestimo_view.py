@@ -18,12 +18,14 @@ class ListarEmprestimosView:
         titulo = ttk.Label(self.frame, text="Empréstimos", font=("Helvetica", 16))
         titulo.pack(pady=10)
 
-        self.tabela = ttk.Treeview(self.frame, columns=("id", "id_livro", "data_emprestimo", "data_devolucao", "id_aluno"), show="headings")
-        self.tabela.heading("id", text="ID")
-        self.tabela.heading("id_livro", text="ID do Livro")
+        self.tabela = ttk.Treeview(
+        self.frame,
+        columns=("titulo", "data_emprestimo", "data_devolucao"),
+        show="headings"
+        )
+        self.tabela.heading("titulo", text="Título do Livro")
         self.tabela.heading("data_emprestimo", text="Data do Empréstimo")
         self.tabela.heading("data_devolucao", text="Data de Devolução")
-        self.tabela.heading("id_aluno", text="ID do Aluno")
         self.tabela.pack(fill=tk.BOTH, expand=True)
 
         btn_voltar = ttk.Button(self.frame, text="Voltar", command=self.voltar)
@@ -41,8 +43,10 @@ class ListarEmprestimosView:
 
         for emp in emprestimos:
             self.tabela.insert("", "end", values=(
-                emp.id, emp.id_livro, emp.data_emprestimo, emp.data_devolucao, emp.id_aluno
-            ))
+            emp['titulo'], 
+            emp['data_emprestimo'], 
+            emp['data_devolucao']
+        ))
 
     def voltar(self):
         self.root.destroy()

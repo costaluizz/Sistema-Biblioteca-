@@ -54,7 +54,20 @@ class Emprestimo:
         conn = conectar()
         cursor = conn.cursor(dictionary=True)
 
-        cursor.execute("SELECT * FROM emprestimos WHERE id = %s", (id,))
+        cursor.execute("""
+                        SELECT
+                            l.titulo AS titulo,
+                            e.data_emprestimo,
+                            e.data_devolucao
+                        FROM 
+                            emprestimos e
+                        JOIN 
+                            livros l ON e.id_livro = l.id_livro
+                        WHERE 
+                            e.id_aluno = %s
+                        """, (id,))
+
+
         resultado = cursor.fetchone()
 
         cursor.close()
@@ -62,18 +75,6 @@ class Emprestimo:
 
         return Emprestimo(**resultado) if resultado else None
 
-    @staticmethod
-    def buscar_emprestimo_por_aluno(id):
-        conn = conectar()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute("SELECT * FROM emprestimos WHERE id_aluno = %s", (id,))
-        resultado = cursor.fetchone()
-
-        cursor.close()
-        conn.close()
-
-        return Emprestimo(**resultado) if resultado else None
     
     def deletar(self):
         if self.id is not None:
@@ -83,9 +84,6 @@ class Emprestimo:
             conn.commit()
             cursor.close()
             conn.close()
-
-
-    
 
     @staticmethod
     def buscar_por_aluno(id_aluno):
