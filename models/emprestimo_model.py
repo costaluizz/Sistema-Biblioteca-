@@ -42,38 +42,54 @@ class Emprestimo:
         conn = conectar()
         cursor = conn.cursor(dictionary=True)
 
-        cursor.execute("SELECT * FROM emprestimos")
+        cursor.execute("""
+        SELECT
+            l.titulo AS titulo,
+            a.nome AS nome,
+            e.data_emprestimo,
+            e.data_devolucao
+        FROM 
+            emprestimos e
+        JOIN 
+            livros l ON e.id_livro = l.id_livro
+        JOIN 
+            alunos a ON e.id_aluno = a.id_aluno""")
+                            
+
         resultados = cursor.fetchall()
 
         cursor.close()
         conn.close()
-        return [Emprestimo(**r) for r in resultados]
+
+        return resultados
     
     @staticmethod
-    def buscar_por_id(id):
+    def buscar_por_aluno(id_aluno):
         conn = conectar()
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute("""
-                        SELECT
-                            l.titulo AS titulo,
-                            e.data_emprestimo,
-                            e.data_devolucao
-                        FROM 
-                            emprestimos e
-                        JOIN 
-                            livros l ON e.id_livro = l.id_livro
-                        WHERE 
-                            e.id_aluno = %s
-                        """, (id,))
+        SELECT
+            l.titulo AS titulo,
+            a.nome AS nome,
+            e.data_emprestimo,
+            e.data_devolucao
+        FROM 
+                emprestimos e
+        JOIN 
+                livros l ON e.id_livro = l.id_livro
+        JOIN 
+                alunos a ON e.id_aluno = a.id_aluno
+        WHERE 
+                e.id_aluno = %s
+        """, (id_aluno,))
 
-
-        resultado = cursor.fetchone()
+        resultados = cursor.fetchall()
 
         cursor.close()
         conn.close()
 
-        return Emprestimo(**resultado) if resultado else None
+        return resultados
 
     
     def deletar(self):
@@ -85,14 +101,4 @@ class Emprestimo:
             cursor.close()
             conn.close()
 
-    @staticmethod
-    def buscar_por_aluno(id_aluno):
-        conn = conectar()
-        cursor = conn.cursor(dictionary=True)
-
-        cursor.execute("SELECT * FROM emprestimos WHERE id_aluno = %s", (id_aluno,))
-        resultados = cursor.fetchall()
-
-        cursor.close()
-        conn.close()
-        return [Emprestimo(**r) for r in resultados]
+ 

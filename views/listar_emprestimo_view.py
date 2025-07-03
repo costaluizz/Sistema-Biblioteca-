@@ -20,10 +20,11 @@ class ListarEmprestimosView:
 
         self.tabela = ttk.Treeview(
         self.frame,
-        columns=("titulo", "data_emprestimo", "data_devolucao"),
+        columns=("titulo", "nome","data_emprestimo", "data_devolucao"),
         show="headings"
         )
         self.tabela.heading("titulo", text="Título do Livro")
+        self.tabela.heading("nome", text="Nome do Aluno")
         self.tabela.heading("data_emprestimo", text="Data do Empréstimo")
         self.tabela.heading("data_devolucao", text="Data de Devolução")
         self.tabela.pack(fill=tk.BOTH, expand=True)
@@ -44,6 +45,7 @@ class ListarEmprestimosView:
         for emp in emprestimos:
             self.tabela.insert("", "end", values=(
             emp['titulo'], 
+            emp['nome'], 
             emp['data_emprestimo'], 
             emp['data_devolucao']
         ))
