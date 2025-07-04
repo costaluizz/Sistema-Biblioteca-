@@ -1,6 +1,7 @@
 import tkinter as tk
 from controllers.livro_controller import LivroController
 
+
 class CadastroLivroView:
     def __init__(self, controller):
         self.controller = controller
@@ -36,4 +37,5 @@ class CadastroLivroView:
         ano = self.ano_var.get()
         editora = self.editora_var.get()
         self.controller = LivroController()
-        self.controller.cadastrar_livro(titulo, autor, ano, editora)         
+        self.controller.cadastrar_livro(titulo, autor, ano, editora)   
+

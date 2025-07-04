@@ -1,4 +1,4 @@
-from db import conectar
+from models.db import conectar
 
 class Livro:
     def __init__(self, titulo, autor, editora, ano ,id=None):
@@ -15,7 +15,7 @@ class Livro:
         if self.id is None:
             sql = """
             INSERT INTO livros (titulo, autor, editora, ano)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s)
             """
             valores = (self.titulo, self.autor, self.editora, self.ano)
         else:

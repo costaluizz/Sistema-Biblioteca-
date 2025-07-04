@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from controllers.emprestimo_controller import EmprestimoController
 from views.menu_principal_view import MenuPrincipalView
+from views.cadastro_livro_view import CadastroLivroView
 
 class ListarEmprestimosView:
     def __init__(self, usuario_logado):
@@ -14,6 +15,10 @@ class ListarEmprestimosView:
 
         self.frame = ttk.Frame(self.root)
         self.frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+        if self.usuario['tipo'] == 'funcionario':
+                    btn_cadastrar_livro = ttk.Button(self.frame, text="Cadastrar Livro", command=self.abrir_cadastro_livro)
+                    btn_cadastrar_livro.pack(pady=5)
 
         titulo = ttk.Label(self.frame, text="Empréstimos", font=("Helvetica", 16))
         titulo.pack(pady=10)
@@ -50,6 +55,11 @@ class ListarEmprestimosView:
             emp['data_devolucao']
         ))
 
+
+    def abrir_cadastro_livro(self):
+        CadastroLivroView(self.usuario)      
+    
+    
     def voltar(self):
         self.root.destroy()
         MenuPrincipalView(self.usuario)
