@@ -34,7 +34,7 @@ class LoginController:
                 "tipo": tipo,
                 "id_aluno": usuario.id if tipo == "aluno" else None
             }
-            ListarEmprestimosView(usuario_logado)
+            ListarEmprestimosView(self.root, usuario_logado)
 
         else:
             messagebox.showerror("Erro", "E-mail ou senha incorretos.")

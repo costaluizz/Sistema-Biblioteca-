@@ -1,41 +1,81 @@
 import tkinter as tk
+from tkinter import ttk, messagebox
 from controllers.livro_controller import LivroController
 
-
 class CadastroLivroView:
-    def __init__(self, controller):
-        self.controller = controller
-        self.root = controller.root
-        self.frame = tk.Frame(self.root)
+    def __init__(self, root, usuario):
+        self.root = root  
+        self.usuario = usuario
+        self.controller = LivroController()
+        self.frame_principal = None
+
+        self._configurar_estilos()
+        self._configurar_janela()
+        self._criar_formulario()
+
+    def _configurar_estilos(self):
+        self.style = ttk.Style()
+        self.style.configure('TFrame', background='white')
+        self.style.configure('TLabel', background='white', font=('Arial', 12))
+        self.style.configure('TButton', font=('Arial', 12), padding=5)
+
+    def _configurar_janela(self):
+        self.root.title("Cadastro de Livro")
+        self.root.attributes("-fullscreen", True)
+        self.root.configure(bg='white')
+        self.root.grid_rowconfigure(0, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)
+
+    def _criar_formulario(self):
+        if self.frame_principal:
+            self.frame_principal.destroy()
+
+        self.frame_principal = ttk.Frame(self.root)
+        self.frame_principal.grid(row=0, column=0, sticky='nsew')
+
+        form_frame = ttk.Frame(self.frame_principal, padding=30, style='TFrame')
+        form_frame.place(relx=0.5, rely=0.5, anchor='center')
+
+        ttk.Label(form_frame, text="Cadastro de Livro", font=('Arial', 16, 'bold')).grid(columnspan=2, pady=(0, 20))
 
         self.titulo_var = tk.StringVar()
         self.autor_var = tk.StringVar()
-        self.ano_var = tk.StringVar()
         self.editora_var = tk.StringVar()
+        self.ano_var = tk.StringVar()
 
-    def mostrar(self):
-        self.root.title("Cadastro de Livro")
-        self.frame.pack(padx=20, pady=20)
+        campos = [("Título", self.titulo_var), ("Autor", self.autor_var), ("Editora", self.editora_var), ("Ano", self.ano_var)]
 
-        tk.Label(self.frame, text="Título:").pack()
-        tk.Entry(self.frame, textvariable=self.titulo_var).pack(pady=5)
+        for i, (label, var) in enumerate(campos):
+            ttk.Label(form_frame, text=label + ":").grid(row=i, column=0, sticky='e', padx=10, pady=5)
+            ttk.Entry(form_frame, textvariable=var, width=30).grid(row=i, column=1, sticky='w', padx=10, pady=5)
 
-        tk.Label(self.frame, text="Autor:").pack()
-        tk.Entry(self.frame, textvariable=self.autor_var).pack(pady=5)
+        btn_frame = ttk.Frame(form_frame)
+        btn_frame.grid(columnspan=2, pady=20)
 
-        tk.Label(self.frame, text="Ano de Publicação:").pack()
-        tk.Entry(self.frame, textvariable=self.ano_var).pack(pady=5)
+        ttk.Button(btn_frame, text="Cadastrar", command=self._cadastrar).pack(side=tk.LEFT, padx=10)
+        ttk.Button(btn_frame, text="Voltar", command=self._voltar).pack(side=tk.LEFT, padx=10)
 
-        tk.Label(self.frame, text="Editora:").pack()
-        tk.Entry(self.frame, textvariable=self.editora_var).pack(pady=5)
-
-        tk.Button(self.frame, text="Cadastrar", command=self.enviar_cadastro).pack(pady=10)
-
-    def enviar_cadastro(self):
+    def _cadastrar(self):
         titulo = self.titulo_var.get()
         autor = self.autor_var.get()
-        ano = self.ano_var.get()
         editora = self.editora_var.get()
-        self.controller = LivroController()
-        self.controller.cadastrar_livro(titulo, autor, ano, editora)   
+        ano = self.ano_var.get()
 
+        if not (titulo and autor and editora and ano):
+            messagebox.showerror("Erro", "Todos os campos são obrigatórios.")
+            return
+
+        self.controller.cadastrar_livro(titulo, autor, editora, ano)
+        messagebox.showinfo("Sucesso", "Livro cadastrado com sucesso!")
+        self._limpar_campos()
+
+    def _voltar(self):
+        from views.menu_principal_view import MenuPrincipalView
+        self.frame_principal.destroy()
+        MenuPrincipalView(self.root, self.usuario).mostrar()
+
+    def _limpar_campos(self):
+        self.titulo_var.set("")
+        self.autor_var.set("")
+        self.editora_var.set("")
+        self.ano_var.set("")

@@ -19,7 +19,7 @@ class MenuPrincipalView:
         self._criar_widgets()
         
     def _configurar_janela(self):
-        self.root.title(f"Menu Principal - {self.controller.tipo_usuario.capitalize()}")
+        self.root.title("Menu Principal")
         self.root.configure(bg='#f0f0f0')
         self.root.attributes('-fullscreen', True)
         self.root.grid_rowconfigure(0, weight=1)
@@ -33,7 +33,7 @@ class MenuPrincipalView:
         self.frame.grid(row=0, column=0, sticky='nsew')
         
         ttk.Label(self.frame, 
-                 text=f"Bem-vindo ao Sistema\n({self.controller.tipo_usuario})",
+                 text=f"Bem-vindo ao Sistema)",
                  font=('Arial', 18, 'bold'),
                  justify='center').pack(pady=(0, 30))
         
