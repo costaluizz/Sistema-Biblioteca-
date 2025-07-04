@@ -1,33 +1,30 @@
 from db import conectar
 
 class Livro:
-    def __init__(self, titulo, autor, editora, ano, quantidade_disponivel, status='disponível', id=None):
+    def __init__(self, titulo, autor, editora, ano ,id=None):
         self.id = id
         self.titulo = titulo
         self.autor = autor
         self.editora = editora
         self.ano = ano
-        self.quantidade_disponivel = quantidade_disponivel
-        self.status = status
-
+   
     def salvar_livro(self):
         conn = conectar()
         cursor = conn.cursor()
         
         if self.id is None:
             sql = """
-            INSERT INTO livros (titulo, autor, editora, ano, quantidade_disponivel, status)
+            INSERT INTO livros (titulo, autor, editora, ano)
             VALUES (%s, %s, %s, %s, %s, %s)
             """
-            valores = (self.titulo, self.autor, self.editora, self.ano, self.quantidade_disponivel, self.status)
+            valores = (self.titulo, self.autor, self.editora, self.ano)
         else:
             sql = """
             UPDATE livros
-            SET titulo = %s, autor = %s, editora = %s, ano = %s, quantidade_disponivel = %s, status = %s
+            SET titulo = %s, autor = %s, editora = %s, ano = %s
             WHERE id = %s
             """
-            valores = (self.titulo, self.autor, self.editora, self.ano,
-                       self.quantidade_disponivel, self.status, self.id)
+            valores = (self.titulo, self.autor, self.editora, self.ano,self.id)
 
         cursor.execute(sql, valores)
         conn.commit()

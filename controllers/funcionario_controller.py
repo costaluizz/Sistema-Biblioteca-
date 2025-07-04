@@ -20,3 +20,4 @@ class FuncionarioController:
         funcionario = Funcionario(nome, email, senha, id)
         funcionario.salvar_funcionario()
         return funcionario
+    

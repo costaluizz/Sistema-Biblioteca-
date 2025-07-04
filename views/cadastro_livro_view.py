@@ -11,7 +11,6 @@ class CadastroLivroView:
         self.autor_var = tk.StringVar()
         self.ano_var = tk.StringVar()
         self.editora_var = tk.StringVar()
-        self.quantidade_disponivel_var = tk.StringVar()
 
     def mostrar(self):
         self.root.title("Cadastro de Livro")
@@ -29,9 +28,6 @@ class CadastroLivroView:
         tk.Label(self.frame, text="Editora:").pack()
         tk.Entry(self.frame, textvariable=self.editora_var).pack(pady=5)
 
-        tk.Label(self.frame, text="Quantidade Disponível:").pack()
-        tk.Entry(self.frame, textvariable=self.quantidade_disponivel_var).pack(pady=5)
-
         tk.Button(self.frame, text="Cadastrar", command=self.enviar_cadastro).pack(pady=10)
 
     def enviar_cadastro(self):
@@ -39,6 +35,5 @@ class CadastroLivroView:
         autor = self.autor_var.get()
         ano = self.ano_var.get()
         editora = self.editora_var.get()
-        quantidade_disponivel = self.quantidade_disponivel_var.get()
         self.controller = LivroController()
-        self.controller.cadastrar_livro(titulo, autor, ano, editora, quantidade_disponivel)         
+        self.controller.cadastrar_livro(titulo, autor, ano, editora)         
