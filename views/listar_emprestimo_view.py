@@ -57,11 +57,11 @@ class ListarEmprestimosView:
     def abrir_cadastro_livro(self):
         from views.cadastro_livro_view import CadastroLivroView
         self.frame.destroy()
+        
         CadastroLivroView(self.root, self.usuario)
 
     def voltar(self):
         from views.menu_principal_view import MenuPrincipalView
-        print('aqui', self.usuario)
         self.frame.destroy()
         self.root.deiconify() 
         MenuPrincipalView(self.root, self.usuario).mostrar()
